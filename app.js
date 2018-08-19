@@ -1,5 +1,6 @@
 const express    = require('express'),
-      stripe     = require('stripe')('sk_test_ERALKPuRF0C65yXlyDjO8dhd'),
+      keys        = require('./config/keys'),
+      stripe     = require('stripe')(keys.stripeSecretKey),
       bodyParser = require('body-parser'),
       exphbs     = require('express-handlebars'),
       app        = express();
@@ -14,7 +15,9 @@ app.use(express.static('${__dirname}/public'));//static folder for images and st
 
 //Index Route//
 app.get('/', (req, res) => {
-    res.render('index');
+    res.render('index', {
+        stripePublishableKey: keys.stripePublishableKey
+    });
 });
 
 //Charge Route
